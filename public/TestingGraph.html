@@ -51,7 +51,7 @@
 
   </script>
 
-  <div id="Stackbar" style="width:500px;height:300px;"></div>
+  <div id="StackBar" style="width:500px;height:300px;"></div>
   <script>
     const runStackedBar = () => {
       fetch('/api/transit', {
@@ -67,7 +67,7 @@
           for (const element of transitData) {
             a[i] = element.Stop;
             b[i] = element.Count;
-            c[i] = element.Route;
+            c[i] = element.Latitude;
             i++
           }
           var trace1 = {
@@ -80,13 +80,17 @@
           var trace2 = {
             x: c,
             y: b,
-            name: 'Route',
+            name: 'Latitude',
             type: 'bar'
           };
           var data = [trace1, trace2];
-          var layout = { barmode: 'stack' };
+          var layout = {
+            barmode: 'stack',
+            height: 600,
+            width: 1000
+          };
 
-          Plotly.newPlot('StackBar', data);
+          Plotly.newPlot('StackBar', data,);
 
         })
         .catch((error) => {
@@ -99,7 +103,7 @@
 
   </script>
 
-  <div id="PieChart" style="width:500px;height:300px;"></div>
+  <div id="PieChart" style="width:1000px;height:600px;"></div>
   <script>
     const runPieChart = () => {
       fetch('/api/transit', {
@@ -118,16 +122,20 @@
           }
           var data = [
             {
-              x: a,
+              values: b,
 
-              y: b,
+              labels: a,
 
               type: 'pie'
 
             }
           ];
+          var layout = {
+            height: 600,
+            width: 1000
+          };
 
-          Plotly.newPlot('PieChart', data);
+          Plotly.newPlot('PieChart', data, layout);
 
         })
         .catch((error) => {
@@ -183,6 +191,12 @@
 
   </script>
 </body>
+
+
+
+
+
+
 
 </html>
 
